@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PopQuest MVP｜互動功能原型</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <p class="eyebrow">PopQuest MVP Prototype</p>
+      <h1>PopQuest 功能原型</h1>
+      <p class="lead">這版是可操作功能，不是純展示頁：支援登入角色、每日簽到、任務、遊戲、禮包碼兌換與簡易管理操作。</p>
+    </header>
+
+    <main class="container">
+      <section class="card" id="auth-card">
+        <h2>帳號登入 / 建立測試帳號</h2>
+        <form id="auth-form" class="grid cols-4 form-grid">
+          <label>
+            使用者名稱
+            <input type="text" id="username" placeholder="例如：amy" required />
+          </label>
+          <label>
+            角色
+            <select id="role">
+              <option value="user">一般使用者</option>
+              <option value="vip">VIP 使用者</option>
+              <option value="admin">管理員</option>
+            </select>
+          </label>
+          <button type="submit" class="btn primary">登入 / 註冊</button>
+          <button type="button" id="logout-btn" class="btn ghost" disabled>登出</button>
+        </form>
+        <p id="auth-status" class="muted">尚未登入。</p>
+      </section>
+
+      <section class="card hidden" id="dashboard-card">
+        <h2>使用者儀表板</h2>
+        <div class="grid cols-3 stats">
+          <article>
+            <h3>目前積分</h3>
+            <p class="stat" id="points-stat">0</p>
+          </article>
+          <article>
+            <h3>今日簽到狀態</h3>
+            <p class="stat" id="checkin-stat">未簽到</p>
+          </article>
+          <article>
+            <h3>角色</h3>
+            <p class="stat" id="role-stat">-</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card hidden" id="actions-card">
+        <h2>每日任務與遊戲化功能</h2>
+        <div class="grid cols-3">
+          <article>
+            <h3>每日簽到</h3>
+            <p>一般 +10，VIP +20（每日一次）</p>
+            <button id="checkin-btn" class="btn primary">立即簽到</button>
+          </article>
+          <article>
+            <h3>完成日常任務</h3>
+            <p>模擬任務完成，獲得 +15 積分</p>
+            <button id="task-btn" class="btn primary">完成任務</button>
+          </article>
+          <article>
+            <h3>猜數字小遊戲</h3>
+            <p>猜 1~5，猜中 +30，猜錯 +5</p>
+            <div class="game-row">
+              <input type="number" id="guess-input" min="1" max="5" placeholder="1~5" />
+              <button id="game-btn" class="btn primary">送出</button>
+            </div>
+          </article>
+        </div>
+        <p id="action-result" class="muted"></p>
+      </section>
+
+      <section class="card hidden" id="redeem-card">
+        <h2>禮包碼兌換</h2>
+        <div class="redeem-row">
+          <input id="redeem-input" type="text" placeholder="輸入禮包碼，例如 POP-NEWYEAR" />
+          <button id="redeem-btn" class="btn primary">兌換</button>
+        </div>
+        <p class="muted">預設測試碼：POP-NEWYEAR（+50）、POP-VIPDAY（+80，僅 VIP）</p>
+        <p id="redeem-result" class="muted"></p>
+      </section>
+
+      <section class="card hidden" id="admin-card">
+        <h2>管理員功能（Admin）</h2>
+        <div class="grid cols-2 form-grid">
+          <label>
+            指定使用者
+            <select id="admin-target"></select>
+          </label>
+          <label>
+            增減積分（可負數）
+            <input id="admin-points" type="number" value="20" />
+          </label>
+        </div>
+        <div class="admin-actions">
+          <button id="admin-adjust-btn" class="btn primary">調整積分</button>
+        </div>
+
+        <h3>新增禮包碼</h3>
+        <div class="grid cols-4 form-grid">
+          <label>代碼<input id="new-code" type="text" placeholder="例如 POP-FEST" /></label>
+          <label>積分<input id="new-code-points" type="number" value="30" /></label>
+          <label>
+            限定角色
+            <select id="new-code-role">
+              <option value="all">所有人</option>
+              <option value="vip">僅 VIP</option>
+            </select>
+          </label>
+          <button id="admin-create-code-btn" class="btn primary" type="button">建立禮包碼</button>
+        </div>
+        <p id="admin-result" class="muted"></p>
+      </section>
+
+      <section class="card hidden" id="log-card">
+        <h2>積分交易紀錄</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>時間</th>
+                <th>類型</th>
+                <th>說明</th>
+                <th>積分變動</th>
+                <th>結餘</th>
+              </tr>
+            </thead>
+            <tbody id="tx-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>PopQuest MVP Demo（前端原型版，資料儲存在瀏覽器 localStorage）</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
